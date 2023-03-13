@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block user %} 
+
+{{session['first_name']}}
+
+{% endblock %}
+
+{%block function%}
+
+<a href="/logout">
+    <button class='btn btn-outline-secondary'type="button">Logout</button>
+</a>
+<style>
+    button {
+        margin-left: 20px;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block head %}
+
+What's on your mind? Create a new post:
+
+{% endblock %}
+
+{% block content %}
+
+    <form>
+        <div class="post_form">
+            <textarea class="form-control" id="floatingTextarea2" rows="5"></textarea>
+            <button id="publish" class="btn btn-outline-primary" type="submit">Publish</button>
+        </div>
+    </form>
+<style>
+    #post_form {
+        width: 80%;
+    }
+    #post_container {
+        margin-top: 25px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid rgb(140, 153, 168);
+    }
+</style>
+
+{% endblock %}
+
+{% block posts %}
+    <h3>Community Posts</h3>
+    <div class="container" id="community_container">
+        <h5>User Name - Date Posted</h5>
+        <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:</p>
+        <form>
+            <div class="post_form">
+                <textarea name='comment' class="form-control" id="floatingTextarea2" rows="2"></textarea>
+                <button id="comment" class="btn btn-outline-primary" type="submit">Comment</button>
+            </div>
+        </form>
+    </div>
+
+    <style>
+        .two {
+            margin: 0;
+        }
+        #community_container {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
