@@ -28,9 +28,10 @@ What's on your mind? Create a new post:
 
 {% block content %}
 
-    <form>
+    <form action="/create/post" method="POST">
         <div class="post_form">
-            <textarea class="form-control" id="floatingTextarea2" rows="5"></textarea>
+            <input type="hidden" name="first_name" value="{{ session['first_name'] }}">
+            <textarea name="content" class="form-control" id="floatingTextarea2" rows="5"></textarea>
             <button id="publish" class="btn btn-outline-primary" type="submit">Publish</button>
         </div>
     </form>
@@ -49,16 +50,18 @@ What's on your mind? Create a new post:
 
 {% block posts %}
     <h3>Community Posts</h3>
-    <div class="container" id="community_container">
-        <h5>User Name - Date Posted</h5>
-        <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:</p>
-        <form>
-            <div class="post_form">
-                <textarea name='comment' class="form-control" id="floatingTextarea2" rows="2"></textarea>
-                <button id="comment" class="btn btn-outline-primary" type="submit">Comment</button>
-            </div>
-        </form>
-    </div>
+    {% for post in posts %}
+        <div class="container" id="community_container">
+            <h5>{{ post.user_name.first_name}} - {{ post.created_at }}</h5>
+            <p>{{ post.content }}</p>
+            <form>
+                <div class="post_form">
+                    <textarea name='comment' class="form-control" id="floatingTextarea2" rows="2"></textarea>
+                    <button id="comment" class="btn btn-outline-primary" type="submit">Comment</button>
+                </div>
+            </form>
+        </div>
+    {% endfor %}
 
     <style>
         .two {
