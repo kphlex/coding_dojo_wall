@@ -51,7 +51,8 @@ def login():
 def dashboard():
     if not session:
         return redirect('/')
-    return render_template('dashboard.html')
+    posts = post.Post.get_posts_with_user_name()
+    return render_template('dashboard.html', posts = posts)
 
 @app.route('/logout')
 def logout_user():

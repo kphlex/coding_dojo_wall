@@ -30,7 +30,7 @@ What's on your mind? Create a new post:
 
     <form action="/create/post" method="POST">
         <div class="post_form">
-            <input type="hidden" name="first_name" value="{{ session['first_name'] }}">
+            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
             <textarea name="content" class="form-control" id="floatingTextarea2" rows="5"></textarea>
             <button id="publish" class="btn btn-outline-primary" type="submit">Publish</button>
         </div>
@@ -51,11 +51,12 @@ What's on your mind? Create a new post:
 {% block posts %}
     <h3>Community Posts</h3>
     {% for post in posts %}
-        <div class="container" id="community_container">
-            <h5>{{ post.user_name.first_name}} - {{ post.created_at }}</h5>
+        <div class="container w-100" id="community_container">
+            <h5>{{ post.user_name.first_name}} - {{ post.created_at.strftime ('%a %d %b %-I:%M %p') }} </h5>
             <p>{{ post.content }}</p>
-            <form>
+            <form action="/create/comment" method="POST">
                 <div class="post_form">
+                    <input type="hidden" name="id" value="{{ post.id }}">
                     <textarea name='comment' class="form-control" id="floatingTextarea2" rows="2"></textarea>
                     <button id="comment" class="btn btn-outline-primary" type="submit">Comment</button>
                 </div>
@@ -66,9 +67,11 @@ What's on your mind? Create a new post:
     <style>
         .two {
             margin: 0;
+            width: 100%;
         }
         #community_container {
             margin-top: 20px;
+            
         }
     </style>
 {% endblock %}

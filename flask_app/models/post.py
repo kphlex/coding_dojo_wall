@@ -1,6 +1,6 @@
 from flask_app.config.connection import connectToMySQL
 from flask_app.models import user
-from flask import session
+
 
 class Post:
     DB = "dojo_wall_db"
@@ -45,20 +45,21 @@ class Post:
         query = """SELECT * 
                 FROM posts
                 LEFT JOIN users
-                ON posts.user_id = user.id
+                ON posts.user_id = user_id
+                ORDER BY posts.id DESC
                 ;"""
-        results = connectToMySQL(cls.DB).query_db( query)
+        results = connectToMySQL(cls.DB).query_db(query)
         posts = []
         for row in results:
             post = cls(row)
             user_data = {
-                'id': row["user.id"],
+                'id': row["users.id"],
                 'first_name': row["first_name"],
                 'last_name': row["last_name"],
                 'email': row["email"],
-                'password': row["password"],
-                'created_at' : row["posts.created_at"],
-                'updated_at' : row["posts.updated_at"],
+                'password': '',
+                'created_at' : row["created_at"],
+                'updated_at' : row["updated_at"],
             }
             post.user_name = user.User(user_data)
             posts.append(post)
